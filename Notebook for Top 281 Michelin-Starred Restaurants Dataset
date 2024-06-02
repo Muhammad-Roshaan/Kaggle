@@ -1,0 +1,49 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import folium
+from geopy.geocoders import Nominatim
+import warnings
+
+warnings.filterwarnings('ignore')
+
+df = pd.read_csv('/kaggle/input/top-281-michelin-starred-restaurants-dataset/Untitled spreadsheet - Sheet1.csv')
+
+print("First few rows of the dataset:")
+print(df.head())
+
+print("\nInfo about the dataset:")
+print(df.info())
+
+print("\nDistribution of Michelin stars:")
+print(df['No'].value_counts())
+
+print("\nDistribution of restaurants by city or state:")
+print(df['City or States'].value_counts())
+
+plt.figure(figsize=(10, 6))
+sns.countplot(data=df, x='No')
+plt.title('Distribution of Michelin Stars')
+plt.xlabel('Michelin Stars')
+plt.ylabel('Count')
+plt.show()
+
+plt.figure(figsize=(12, 8))
+sns.countplot(data=df, y='City or States', order=df['City or States'].value_counts().index)
+plt.title('Distribution of Michelin-Starred Restaurants by City or State')
+plt.xlabel('Count')
+plt.ylabel('City or State')
+plt.show()
+
+top_restaurants = df[df['No'] == 3].head(10)
+print("\nTop Michelin-Starred Restaurants:")
+print(top_restaurants[['Names', 'City or States']])
+
+print("\nSummary:")
+print("The dataset provides information about the top 281 Michelin-starred restaurants.")
+print("We observed the distribution of Michelin stars and restaurants by city or state.")
+print("Top Michelin-starred restaurants were identified and visualized on a map.")
+
+print("\nReferences:")
+print("- Dataset source: [insert source]")
+print("- Libraries used: pandas, matplotlib, seaborn, folium, geopy")
